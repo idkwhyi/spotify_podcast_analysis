@@ -1,0 +1,18 @@
+# Backend
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+
+# Frontend
+node_modules/
+
+# Ignore IDE/editor config files
+.vscode/
+.idea/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
