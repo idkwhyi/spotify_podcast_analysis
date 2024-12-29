@@ -27,10 +27,10 @@ class Region(db.Model):
     __tablename__ = 'region'
     
     region = db.Column(db.String(255), primary_key=True)
-    region_detail = db.Column(db.String(255), nullable=False)
+    regionDetail = db.Column(db.String(255))
     
-    podcast = db.relationship('Podcast', back_populates='region_relation', lazy=True)
-    podcast = db.relationship('Episode', back_populates='region_relation', lazy=True)
+    podcasts = db.relationship('Podcast', back_populates='region_relation', lazy=True)
+    episodes = db.relationship('Episode', back_populates='region_relation', lazy=True)
     
 
 class Podcast(db.Model):

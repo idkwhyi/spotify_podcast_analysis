@@ -12,7 +12,7 @@ def add_region():
         
         required_fields = {
             'region',
-            'region_detail'
+            'regionDetail'
         }
         
         if missing_fields := [
@@ -22,14 +22,30 @@ def add_region():
             return jsonify({
                 "error": f"Missing required fields: {', '.join(missing_fields)}"
             }), 400
+            
+        region = data['region'].upper()
 
-        new_region = Region(**{
-            field: data[field] for field in required_fields
-        })
+        new_region = Region(
+            region = region,
+            regionDetail = data['regionDetail']
+        )
         
         db.session.add(new_region)
         db.session.commit()
         
+        return jsonify({
+            "message": "Region added successfully",
+            "podcast": serialize_region(new_region)
+        }), 201
+        
+        
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e), "region": new_region.region}), 500
+    
+    
+def serialize_region(region):
+    return {
+        "region": region.region,
+        "regionDetail": region.regionDetail
+    }
