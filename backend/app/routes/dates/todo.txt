@@ -1,0 +1,5 @@
+Date Table Routes
+GET /dates: Retrieve all available dates.
+GET /dates/:date: Get details about a specific date.
+POST /dates: Add a new date (e.g., for new data entry).
+DELETE /dates/:date: Delete a specific date.

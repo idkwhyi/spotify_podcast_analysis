@@ -1,0 +1,6 @@
+Episode Table Routes
+GET /episodes: Retrieve all episodes with optional filters (e.g., by podcast, region, date, rank).
+GET /episodes/:episodeURI: Retrieve details of a specific episode by episodeURI.
+POST /episodes: Add a new episode.
+PUT /episodes/:episodeURI: Update details of an episode by episodeURI.
+DELETE /episodes/:episodeURI: Delete an episode by episodeURI.
