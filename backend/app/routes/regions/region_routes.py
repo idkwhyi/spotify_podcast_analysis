@@ -10,10 +10,25 @@ def add_region():
     try:
         data = request.get_json()
         
-        request_fields = [
-            'region': request.args.get('region'),
-            'region_detail': request.args.get('region_detail')
-        ]
+        required_fields = {
+            'region',
+            'region_detail'
+        }
+        
+        if missing_fields := [
+            field for field in required_fields
+            if not data.get(field)
+        ]:
+            return jsonify({
+                "error": f"Missing required fields: {', '.join(missing_fields)}"
+            }), 400
+
+        new_region = Region(**{
+            field: data[field] for field in required_fields
+        })
+        
+        db.session.add(new_region)
+        db.session.commit()
         
     except Exception as e:
         db.session.rollback()
