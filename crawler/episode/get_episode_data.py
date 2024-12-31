@@ -1,7 +1,6 @@
 import os
 from requests import get, exceptions
 import logging
-import json
 from datetime import datetime, date
 import pandas as pd
 
@@ -248,45 +247,38 @@ def get_transformed_search_eps(data, **kwargs: str) -> pd.DataFrame:
 
 
 # Loop to get top podcast data in each country
-for index, market in enumerate(available_markets):
-    # Modified code
-    try:
-        # Fetch podcast data
-        data = _fetch_podcastchart(chart="top_episodes", region=market)
+def get_episode_data(regions: list[str], file_name:str, dir:str):
         
-        if data:  # Proceed if data is not empty
-            transformed_data = get_transformed_podcastchart(data, "top_episodes", market)
-            enriched_data = get_transformed_search_eps(data=transformed_data.to_dict(orient="records"), chart="top_episodes", region=market)
+    for index, market in enumerate(available_markets):
+        # Modified code
+        try:
+            # Fetch podcast data
+            data = _fetch_podcastchart(chart="top_episodes", region=market)
             
-            if not enriched_data.empty:
-                # Create a directory called 'output' in the current directory
-                directory = f"ENHANCE/episode/{data_date}"
-                os.makedirs(directory, exist_ok=True)
-
-                # Define the JSON file path inside the output directory
-                json_file_name = os.path.join(directory, f"TEST_WORK1_{market}.json")
+            if data:  # Proceed if data is not empty
+                transformed_data = get_transformed_podcastchart(data, "top_episodes", market)
+                enriched_data = get_transformed_search_eps(data=transformed_data.to_dict(orient="records"), chart="top_episodes", region=market)
                 
-                enriched_json = enriched_data.to_dict(orient="records")
+                if not enriched_data.empty:
+                    # Create a directory called 'output' in the current directory
+                    directory = f"{dir}/{market}/"
+                    csv_file_name = os.path.join(os.path.expanduser("~"), directory, f"{file_name}.csv")
 
-                # Save the result to a new JSON file
-                # with open(json_file_name, "w", encoding="utf-8") as json_file:
-                #     json.dump(enriched_json, json_file, ensure_ascii=False, indent=4)
-                # print(f"Data saved to {json_file_name}")
+                    os.makedirs(directory, exist_ok=True)
 
-                # Save the result to a CSV format
-                csv_file_name = os.path.join(directory, f"TOP_EPISODE_{market}.csv")
-                enriched_data.to_csv(csv_file_name, index=False)
-                print(f"Data saved to {csv_file_name}")
+                    enriched_data.to_csv(csv_file_name, index=False)
+                    
+                    print(f"Data saved to {csv_file_name}")
+                else:
+                    print(f"No transformed data for {market}")
             else:
-                print(f"No transformed data for {market}")
-        else:
-            print(f"Failed to get data from {market}.")
+                print(f"Failed to get data from {market}.")
 
-    except Exception as e:
-        print(f"Error processing market {market}: {e}")
+        except Exception as e:
+            print(f"Error processing market {market}: {e}")
 
-    finally:
-        print(f"Progress {index + 1}/{len(available_markets)}")
+        finally:
+            print(f"Progress {index + 1}/{len(available_markets)}")
 
-        
-print("I got the Episodes :D")
+            
+    print("I got the Episodes :D")
