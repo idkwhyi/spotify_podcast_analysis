@@ -19,12 +19,10 @@ def _fetch_podcastchart(chart: str, region: str):
         logging.error(f"Error fetching data for {region}: {e}")
         return None
        
-def get_transformed_podcastchart(data, chart: str = "top_podcasts", region: str = "") -> pd.DataFrame:
+def get_transformed_podcastchart(data, date_used, chart: str = "top_podcasts", region: str = "") -> pd.DataFrame:
     if not data:
         return pd.DataFrame()  # Return empty DataFrame if no data
     
-    today = date.today()
-
     columns = [
         "date", "rank", "region", "chartRankMove", "showUri", "showName", "showDescription"
     ]
@@ -32,7 +30,7 @@ def get_transformed_podcastchart(data, chart: str = "top_podcasts", region: str 
 
     for i, item in enumerate(data):
         row = {
-            "date": today,
+            "date": date_used,
             "rank": i + 1,
             "region": region,
             "chartRankMove": item["chartRankMove"],
@@ -53,7 +51,7 @@ def get_transformed_podcastchart(data, chart: str = "top_podcasts", region: str 
         file_name: File name as a date (30_12_2024)
 '''
 
-def get_podcast_data(regions: list[str], file_name: str, dir: str):        
+def get_podcast_data(regions: list[str], file_name: str, dir: str, date_used):        
     for index, market in enumerate(regions):
         try:
             # Fetch podcast data
@@ -61,7 +59,7 @@ def get_podcast_data(regions: list[str], file_name: str, dir: str):
             
             if data:  # Proceed if data is not empty
                 # Transform the data into a DataFrame
-                transformed_data = get_transformed_podcastchart(data, "top_podcasts", market)
+                transformed_data = get_transformed_podcastchart(data, date_used, "top_podcasts", market)
                 
                 if not transformed_data.empty:    
                     directory = f"{dir}/{market}/"

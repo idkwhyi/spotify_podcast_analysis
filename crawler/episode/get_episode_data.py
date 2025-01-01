@@ -1,52 +1,10 @@
 import os
 from requests import get, exceptions
 import logging
-from datetime import datetime, date
+from datetime import date
 import pandas as pd
-
-'''
-    THIS FILE IS USED TO GET THE TOP PODCAST PER DAY IN EACH COUNTRY AVAILABLE
-'''
-
-today = datetime.now()
-date_column = today.strftime("%Y-%m-%d")
-
-# Format the date as DD_MM_YYYY
-formatted_date = today.strftime("%d_%m_%Y")
-data_date = f'{formatted_date[:2]}_12_2024' # Folder name
-
-# ALL COUNTRY
-available_markets = [
-        "AR",
-        "AU",
-        "AT",
-        "BR", 
-        "CA",
-        "CL",
-        "CO",
-        "FR",
-        "DE",
-        "IN",
-        "ID",
-        "IE",
-        "IT",
-        "JP",
-        "MX",
-        "NZ",
-        "PH",
-        "PL",
-        "ES",
-        "NL",
-        "GB",
-        "US",        
-    ]
-market_length = len(available_markets)
-
-
 import requests
 from base64 import b64encode
-
-
 
 def get_token():
     CLIENT_ID = 'd95816bc075d4776bddbe0c58285c523'
@@ -135,7 +93,7 @@ def get_transformed_podcastchart(data, chart: str = "top_episodes", region: str 
 
     for i, item in enumerate(data):
         row = {
-            "date": formatted_date,
+            "date": today,
             "rank": i + 1,
             "region": region,
             "chartRankMove": item["chartRankMove"],
@@ -249,7 +207,7 @@ def get_transformed_search_eps(data, **kwargs: str) -> pd.DataFrame:
 # Loop to get top podcast data in each country
 def get_episode_data(regions: list[str], file_name:str, dir:str):
         
-    for index, market in enumerate(available_markets):
+    for index, market in enumerate(regions):
         # Modified code
         try:
             # Fetch podcast data
@@ -278,7 +236,7 @@ def get_episode_data(regions: list[str], file_name:str, dir:str):
             print(f"Error processing market {market}: {e}")
 
         finally:
-            print(f"Progress {index + 1}/{len(available_markets)}")
+            print(f"Progress {index + 1}/{len(regions)}")
 
             
     print("I got the Episodes :D")
