@@ -236,7 +236,7 @@ def get_episode_data(regions: list[str], file_name:str, dir:str):
             print(f"Error processing market {market}: {e}")
 
         finally:
-            print(f"Progress {index + 1}/{len(regions)}")
+            print(f"Progress {index + 1}/{len(regions)} \n")
 
             
     print("I got the Episodes :D")

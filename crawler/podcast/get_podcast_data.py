@@ -8,9 +8,7 @@ def _fetch_podcastchart(chart: str, region: str):
     url = f"https://podcastcharts.byspotify.com/api/charts/{chart}"
     params = {"region": region}
     headers = {"Referer": "https://podcastcharts.byspotify.com/"}
-    print("_fetch called")
     try:
-        print("try _fetch called")
         response = get(url, headers=headers, params=params)
         response.raise_for_status()
         logging.info(f"Fetched _fetch_podcastchart: {region}")
