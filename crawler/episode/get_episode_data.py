@@ -80,11 +80,9 @@ def _fetch_episodes(episode_ids: str, region: str = 'us'):
         return None
         
 # * Enrich data
-def get_transformed_podcastchart(data, chart: str = "top_episodes", region: str = "") -> pd.DataFrame:
+def get_transformed_podcastchart(data, date_used, chart: str = "top_episodes", region: str = "") -> pd.DataFrame:
     if not data:
         return pd.DataFrame() 
-    
-    today = date.today()
 
     columns = [
         "date", "rank", "region", "chartRankMove", "episodeUri", "showUri", "episodeName"
@@ -93,7 +91,7 @@ def get_transformed_podcastchart(data, chart: str = "top_episodes", region: str 
 
     for i, item in enumerate(data):
         row = {
-            "date": today,
+            "date": date_used,
             "rank": i + 1,
             "region": region,
             "chartRankMove": item["chartRankMove"],
@@ -205,7 +203,7 @@ def get_transformed_search_eps(data, **kwargs: str) -> pd.DataFrame:
 
 
 # Loop to get top podcast data in each country
-def get_episode_data(regions: list[str], file_name:str, dir:str):
+def get_episode_data(regions: list[str], date_used, file_name:str, dir:str):
         
     for index, market in enumerate(regions):
         # Modified code
@@ -214,7 +212,7 @@ def get_episode_data(regions: list[str], file_name:str, dir:str):
             data = _fetch_podcastchart(chart="top_episodes", region=market)
             
             if data:  # Proceed if data is not empty
-                transformed_data = get_transformed_podcastchart(data, "top_episodes", market)
+                transformed_data = get_transformed_podcastchart(data, date_used, "top_episodes", market)
                 enriched_data = get_transformed_search_eps(data=transformed_data.to_dict(orient="records"), chart="top_episodes", region=market)
                 
                 if not enriched_data.empty:

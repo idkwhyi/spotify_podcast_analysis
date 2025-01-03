@@ -12,7 +12,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
-from typing import List, Dict, Optional
+from typing import List, Dict
 import joblib
 
 class PodcastCategorizer:
@@ -166,9 +166,7 @@ class PodcastCategorizer:
 
 
 # Main Function
-def get_category(description: str) -> List[str]:   
-    # List of categories for sorting 
-    
+def get_category(description: str) -> any:   
     
     categories = {
         "arts and entertainment": ["movies", "theater", "music", "art exhibitions", "celebrities"],
@@ -225,19 +223,15 @@ def get_category(description: str) -> List[str]:
         "true crime": ["murder mysteries", "investigations", "criminal psychology", "serial killers", "cold cases", "killer", "terrorrist", "dead", "brutally murdered", "murdered", "murder"],
     }
 
-    
     # Initialize and train the categorizer
     categorizer = PodcastCategorizer()
     categorizer.train(categories)
     
-    # for description in description:
-    # Get category probabilities
-    probs = categorizer.predict_category(description)
-    best_category = categorizer.get_best_category(description)
+    probs = categorizer.predict_category(description) # Percentage of each categories (All)
+    best_category = categorizer.get_best_category(description) # Highest percentage categories from probs (>1)
     
-    main_category = max(probs, key=probs.get)
+    main_category = max(probs, key=probs.get) # Highest percentage from best_category (1)
 
-    
     print(f"\nText: {description}")
     # print("Category Probabilities:")
     # for category, prob in sorted(probs.items(), key=lambda x: x[1], reverse=True):
@@ -247,9 +241,8 @@ def get_category(description: str) -> List[str]:
     print("Next index \n\n")
     
     
-    
     returned_data = {
-        'description': description,
+        # 'description': description,
         'main_category': main_category,
         'categories': best_category,
     }
