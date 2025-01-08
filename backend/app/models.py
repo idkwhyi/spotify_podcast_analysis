@@ -3,77 +3,81 @@ from datetime import datetime
 
 class Date(db.Model):
     __tablename__ = 'date'
-
-    date = db.Column(db.Date, primary_key=True)  
-
+    
+    date = db.Column(db.Date, primary_key=True)
+    
     # Relationships
-    podcasts = db.relationship('Podcast', back_populates='date_relation', lazy=True)
-    episodes = db.relationship('Episode', back_populates='date_relation', lazy=True)
+    podcasts = db.relationship('Podcast', back_populates='date')
+    episodes = db.relationship('Episode', back_populates='date')
 
     @property
     def formatted_date(self):
-        """Return date in DD-MM-YYYY format."""
         return self.date.strftime('%d-%m-%Y')
 
     @formatted_date.setter
     def formatted_date(self, value):
-        """Accept date in DD-MM-YYYY format and convert to Date object."""
         self.date = datetime.strptime(value, '%d-%m-%Y').date()
-
-    def __repr__(self):
-        return f"<Date(date={self.formatted_date})>"
 
 class Region(db.Model):
     __tablename__ = 'region'
     
-    region = db.Column(db.String(255), primary_key=True)
-    regionDetail = db.Column(db.String(255))
+    region_id = db.Column(db.String(255), primary_key=True)
+    region_name = db.Column(db.String(255))
     
-    podcasts = db.relationship('Podcast', back_populates='region_relation', lazy=True)
-    episodes = db.relationship('Episode', back_populates='region_relation', lazy=True)
-    
+    # Relationships
+    podcasts = db.relationship('Podcast', back_populates='region')
+    episodes = db.relationship('Episode', back_populates='region')
 
 class Podcast(db.Model):
     __tablename__ = 'podcast'
 
-    showURI = db.Column(db.String(255), primary_key=True)
+    show_uri = db.Column(db.String(255), primary_key=True)
     rank = db.Column(db.Integer, nullable=False)
-    chartRankMove = db.Column(db.String(255))
-    showName = db.Column(db.String(255), nullable=False)
-    showDescription = db.Column(db.Text)
+    chart_rank_move = db.Column(db.String(255))
+    show_name = db.Column(db.String(255), nullable=False)
+    show_description = db.Column(db.Text)
 
     # Foreign keys
-    date = db.Column(db.Date, db.ForeignKey('date.date'), nullable=False)
-    region = db.Column(db.String(50), db.ForeignKey('region.region'), nullable=False)
+    date_id = db.Column(db.Date, db.ForeignKey('date.date'), nullable=False)
+    region_id = db.Column(db.String(255), db.ForeignKey('region.region_id'), nullable=False)
 
     # Relationships
-    date_relation = db.relationship('Date', back_populates='podcasts')
-    region_relation = db.relationship('Region', back_populates='podcasts')
-    episodes = db.relationship('Episode', back_populates='podcast_relation', lazy=True)
-
-    def __repr__(self):
-        return f"<Podcast(showURI={self.showURI}, showName={self.showName})>"
-
+    date = db.relationship('Date', back_populates='podcasts')
+    region = db.relationship('Region', back_populates='podcasts')
+    episodes = db.relationship('Episode', back_populates='podcast')
 
 class Episode(db.Model):
     __tablename__ = 'episode'
 
-    episodeURI = db.Column(db.String(255), primary_key=True)
+    episode_uri = db.Column(db.String(255), primary_key=True)
     rank = db.Column(db.Integer, nullable=False)
-    chartRankMove = db.Column(db.String(255))
-    episodeName = db.Column(db.String(255), nullable=False)
-    episodeDescription = db.Column(db.String(255))
-    duration = db.Column(db.String(255))
+    chart_rank_move = db.Column(db.String(255))
+    episode_name = db.Column(db.String(255), nullable=False)
+    episode_description = db.Column(db.Text)
+    duration_ms = db.Column(db.String(255), nullable=False)
+    main_category = db.Column(db.String(255))
+    episode_release_date = db.Column(db.Date, nullable=False)
 
     # Foreign keys
-    date = db.Column(db.Date, db.ForeignKey('date.date'), nullable=False)
-    region = db.Column(db.String(50), db.ForeignKey('region.region'), nullable=False)
-    showURI = db.Column(db.String(255), db.ForeignKey('podcast.showURI'), nullable=False)
+    date_id = db.Column(db.Date, db.ForeignKey('date.date'), nullable=False)
+    region_id = db.Column(db.String(255), db.ForeignKey('region.region_id'), nullable=False)
+    show_uri = db.Column(db.String(255), db.ForeignKey('podcast.show_uri'), nullable=False)
 
     # Relationships
-    date_relation = db.relationship('Date', back_populates='episodes')
-    region_relation = db.relationship('Region', back_populates='episodes')
-    podcast_relation = db.relationship('Podcast', back_populates='episodes')
+    date = db.relationship('Date', back_populates='episodes')
+    region = db.relationship('Region', back_populates='episodes')
+    podcast = db.relationship('Podcast', back_populates='episodes')
+    categories = db.relationship('Category', secondary='episode_categories', back_populates='episodes')
 
-    def __repr__(self):
-        return f"<Episode(episodeURI={self.episodeURI}, episodeName={self.episodeName})>"
+class Category(db.Model):
+    __tablename__ = 'category'
+    
+    category_name = db.Column(db.String(255), primary_key=True)
+    
+    episodes = db.relationship('Episode', secondary='episode_categories', back_populates='categories')
+
+episode_categories = db.Table(
+    'episode_categories',
+    db.Column('episode_id', db.String(255), db.ForeignKey('episode.episode_uri'), primary_key=True),
+    db.Column('category_id', db.String(255), db.ForeignKey('category.category_name'), primary_key=True)
+)

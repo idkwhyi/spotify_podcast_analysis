@@ -122,6 +122,7 @@ class PodcastCategorizer:
             
         # Preprocess the input text
         processed_text = self.preprocess_text(description_text)
+        print("processed_text")
         
         # Get probability predictions for all categories
         probabilities = self.pipeline.predict_proba([processed_text])[0]
@@ -225,10 +226,15 @@ def get_category(description: str) -> any:
 
     # Initialize and train the categorizer
     categorizer = PodcastCategorizer()
+    print("success initialize categorizer")
     categorizer.train(categories)
+    print("success initialize train categorizer")
     
+    print("start propbs")
     probs = categorizer.predict_category(description) # Percentage of each categories (All)
+    print("probs")
     best_category = categorizer.get_best_category(description) # Highest percentage categories from probs (>1)
+    print("best cate")
     
     main_category = max(probs, key=probs.get) # Highest percentage from best_category (1)
 
@@ -238,7 +244,7 @@ def get_category(description: str) -> any:
     #     print(f"{category}: {prob:.2%}")
     print("Main Category: ", {main_category})
     print(f"Best Category: {best_category}")
-    print("Next index \n\n")
+    print('\n')
     
     
     returned_data = {

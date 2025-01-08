@@ -1,10 +1,11 @@
 # Backend
-__pycache__/
+/__pycache__/
 *.pyc
 *.pyo
 *.pyd
 env/
 venv/
+/.env
 
 # Frontend
 node_modules/
