@@ -3,6 +3,7 @@ from models import db, Podcast
 
 podcast_routes = Blueprint('episode_routes', __name__)
 
+# * Get Podcast
 @podcast_routes.route('/podcasts', methods=['GET'])
 def get_podcasts():
     try:
@@ -32,6 +33,7 @@ def get_podcasts():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# * Post Podcast
 @podcast_routes.route('/podcasts', methods=['POST'])
 def add_podcast():
     try:
@@ -39,8 +41,8 @@ def add_podcast():
         
         # Validate required fields
         required_fields = [
-            'showURI', 'showName', 'showDescription',
-            'rank', 'chartRankMove', 'date', 'region'
+            'podcast_uri', 'podcast_name', 'podcast_description',
+            'rank', 'chart_rank_move', 'date', 'region'
         ]
         
         if missing_fields := [
@@ -68,6 +70,7 @@ def add_podcast():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+
 
 def serialize_podcast(podcast):
     """Helper function to serialize podcast object to dictionary."""
