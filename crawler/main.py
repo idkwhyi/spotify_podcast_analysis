@@ -55,7 +55,6 @@ def main():
             related_categories.append('others')
         else:
             related_categories.append(', '.join(categories))
-        # related_categories.append(result['categories'])
         
     df['mainCategory'] = main_categories
     df['relatedCategories'] = related_categories

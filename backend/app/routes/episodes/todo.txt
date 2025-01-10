@@ -4,3 +4,7 @@ GET /episodes/:episodeURI: Retrieve details of a specific episode by episodeURI.
 POST /episodes: Add a new episode.
 PUT /episodes/:episodeURI: Update details of an episode by episodeURI.
 DELETE /episodes/:episodeURI: Delete an episode by episodeURI.
+
+
+
+update routes column name
