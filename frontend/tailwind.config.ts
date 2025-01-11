@@ -13,8 +13,12 @@ export default {
   theme: {
   	extend: {
   		colors: {
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
+        borderColor: 'rgb(124, 126, 129)',
+        tableHover: 'rgb(235, 237, 239)',
+  			background: 'rgb(31,31,31)',
+  			foreground: 'rgb(236, 237, 238)',
+        graphiteGray: 'rgb(37,37,38)', // lighter than background
+        obsidianShadow: 'rgb(44,44,44)', // Lighter black
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -24,8 +28,8 @@ export default {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
+  				DEFAULT: 'rgb(201, 240, 120)',
+  				foreground: '#000'
   			},
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',
@@ -54,11 +58,6 @@ export default {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
-  		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		}
   	}
   },
   plugins: [tailwindcssAnimate, nextui()],

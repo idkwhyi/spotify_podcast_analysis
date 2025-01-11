@@ -9,11 +9,12 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   Link,
+  Button,
 } from "@nextui-org/react";
 
 export const AcmeLogo = () => {
   return (
-    <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+    <svg fill="none" height="36" viewBox="0 0 32 32" width="36" className="bg-transparent">
       <path
         clipRule="evenodd"
         d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
@@ -42,45 +43,40 @@ const NavBar = () => {
   ];
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} className="bg-red-200 w-auto flex items-center justify-start">
-      <NavbarContent>
+    <Navbar onMenuOpenChange={setIsMenuOpen} className="border-b border-b-borderColor bg-graphiteGray">
+      <NavbarContent className="w-fit bg-graphiteGray">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
+          className="sm:hidden bg-graphiteGray"
         />
-        <NavbarBrand>
+        <NavbarBrand className="bg-graphiteGray">
           <AcmeLogo />
-          <p className="font-bold text-inherit">ACME</p>
+          <p className="font-bold text-inherit bg-graphiteGray">ASPY</p>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
+      <NavbarContent className="hidden sm:flex gap-4 bg-graphiteGray" justify="center">
+        <NavbarItem className="bg-graphiteGray">
+          <Link className="bg-graphiteGray" color="foreground" href="#">
             Features
           </Link>
         </NavbarItem>
-        <NavbarItem isActive>
-          <Link aria-current="page" href="#">
+        <NavbarItem isActive className="bg-graphiteGray">
+          <Link aria-current="page" className="bg-graphiteGray" href="#">
             Customers
           </Link>
         </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
+        <NavbarItem className="bg-graphiteGray">
+          <Link className="bg-graphiteGray" color="foreground" href="#">
             Integrations
           </Link>
         </NavbarItem>
       </NavbarContent>
-      {/* <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent> */}
+
+      <NavbarContent justify="end">
+        <Button className="bg-primary text-black px-5 py-2 rounded-md">Trending</Button>
+      </NavbarContent>
+      
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>

@@ -1,3 +1,53 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*{
+  background-color: rgb(31,31,31);
+  color: rgb(236, 237, 238);
+}
+
+html {
+  font-size: 16px;
+}
+.h1 {
+  font-size: 2rem;
+}
+
+.h2 {
+  font-size: 1.6rem;
+}
+
+.h3 {
+  font-size: 1.4rem;
+}
+
+.h4 {
+  font-size: 1.2rem;
+}
+
+.h5{
+  font-size: 1.25rem;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.round {
+  border-radius: 16px;
+}
+
+/* Fix left arrow */
+.Pagination-arrow-left::before {
+  content: '◀'; /* Left-pointing arrow */
+  transform: none;
+}
+
+/* Fix right arrow */
+.Pagination-arrow-right::before {
+  content: '▶'; /* Right-pointing arrow */
+  transform: none;
+}
