@@ -1,85 +1,32 @@
 from flask import Blueprint, request, jsonify
-from models import db, Podcast
+from app.models import Episode  # Pastikan model TopEpisode terhubung dengan database Anda
+from app import db
 
-podcast_routes = Blueprint('episode_routes', __name__)
+episode_routes = Blueprint('episode_routes', __name__, url_prefix='/api/episode')
 
-# * Get Podcast
-@podcast_routes.route('/podcasts', methods=['GET'])
-def get_podcasts():
+@episode_routes.route('/<string:episode_uri>', methods=['GET'])
+def get_episode_by_uri(episode_uri):
     try:
-        # Get query parameters
-        filters = {
-            'region': request.args.get('region'),
-            'date': request.args.get('date'),
-            'rank': request.args.get('rank')
-        }
-        
-        # Build query dynamically
-        query = Podcast.query
-        
-        # Apply only non-None filters
-        for key, value in filters.items():
-            if value is not None:
-                query = query.filter_by(**{key: value})
-                
-        # Execute query
-        podcasts = query.all()
-        
-        # Serialize response using a helper method
-        return jsonify({
-            "podcasts": [serialize_podcast(podcast) for podcast in podcasts]
-        }), 200
-        
+        episode = Episode.query.filter_by(episode_uri=episode_uri).first()
+
+        if not episode:
+            return jsonify({"error": "Episode not found"}), 404
+
+        episode_data = serialize_top_episode(episode)
+
+        return jsonify({'episode': episode_data}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# * Post Podcast
-@podcast_routes.route('/podcasts', methods=['POST'])
-def add_podcast():
-    try:
-        data = request.get_json()
-        
-        # Validate required fields
-        required_fields = [
-            'podcast_uri', 'podcast_name', 'podcast_description',
-            'rank', 'chart_rank_move', 'date', 'region'
-        ]
-        
-        if missing_fields := [
-            field for field in required_fields 
-            if not data.get(field)
-        ]:
-            return jsonify({
-                "error": f"Missing required fields: {', '.join(missing_fields)}"
-            }), 400
-            
-        # Create a new Podcast object
-        new_podcast = Podcast(**{
-            field: data[field] for field in required_fields
-        })
-        
-        # Add to database session
-        db.session.add(new_podcast)
-        db.session.commit()
-        
-        return jsonify({
-            "message": "Podcast added successfully",
-            "podcast": serialize_podcast(new_podcast)
-        }), 201
-        
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
-
-
-def serialize_podcast(podcast):
+def serialize_top_episode(episode):
     """Helper function to serialize podcast object to dictionary."""
     return {
-        "showURI": podcast.showURI,
-        "showName": podcast.showName,
-        "showDescription": podcast.showDescription,
-        "rank": podcast.rank,
-        "chartRankMove": podcast.chartRankMove,
-        "date": podcast.date,
-        "region": podcast.region,
+        "episode_uri": episode.episode_uri,
+        "episode_name": episode.episode_name,
+        "episode_description": episode.episode_description,
+        "duration_ms": episode.duration_ms,
+        "main_category": episode.main_category,
+        "episode_release_date": episode.episode_release_date,
+        "podcast_uri": episode.podcast_uri,
+        "region_id": episode.region_id
     }

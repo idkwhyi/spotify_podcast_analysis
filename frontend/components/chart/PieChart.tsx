@@ -68,7 +68,7 @@ const PieChart: React.FC<PieChartProps> = ({
           orient: 'vertical',
           left: 'left',
           textStyle: {
-            fontSize: 11,
+            fontSize: 14,
             color: '#fff',
           },
         },
@@ -80,7 +80,7 @@ const PieChart: React.FC<PieChartProps> = ({
             data: data,
             emphasis: {
               itemStyle: {
-                shadowBlur: 10,
+                shadowBlur: 1,
                 shadowOffsetX: 0,
                 shadowColor: 'rgba(0, 0, 0, 0.5)'
               }
