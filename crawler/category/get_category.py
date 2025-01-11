@@ -239,16 +239,11 @@ def get_category(description: str) -> any:
     main_category = max(probs, key=probs.get) # Highest percentage from best_category (1)
 
     print(f"\nText: {description}")
-    # print("Category Probabilities:")
-    # for category, prob in sorted(probs.items(), key=lambda x: x[1], reverse=True):
-    #     print(f"{category}: {prob:.2%}")
     print("Main Category: ", {main_category})
     print(f"Best Category: {best_category}")
     print('\n')
     
-    
     returned_data = {
-        # 'description': description,
         'main_category': main_category,
         'categories': best_category,
     }

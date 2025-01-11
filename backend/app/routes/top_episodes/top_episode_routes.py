@@ -1,6 +1,5 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify
 from app.models import TopEpisode  
-from app import db
 
 top_episodes_routes = Blueprint('top_episodes_routes', __name__, url_prefix='/api/top_episodes')
 

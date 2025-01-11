@@ -167,7 +167,6 @@ def get_podcast_details(show_uri):
         podcast_description = podcast_data['description']
         podcast_region = podcast_data.get('country', 'Unknown')
         
-        
         return {
             'podcast_name': podcast_name,
             'podcast_description': podcast_description,
@@ -280,8 +279,7 @@ def insert_episode_data(connection, csv_file_path):
     connection.commit()
     logging.info("Episode data inserted successfully!")
   
-
-# Main function
+# * Main Program
 if __name__ == "__main__":
     today = datetime.today()
     formatted_date = today.strftime("%d_%m_%Y") # date used for the file name

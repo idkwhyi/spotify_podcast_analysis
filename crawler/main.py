@@ -34,10 +34,9 @@ def main():
     get_episode_data(regions=regions, date_used=date_used, file_name=formatted_date, dir=episode_target_directory)
     
     
-    # Get Category from episode data
+    #! Get Category from episode data
     file_date = '31_12_2024'
     category_target_dictionary = os.path.expanduser(f"~/Desktop/saved_data/episode/US/{formatted_date}")
-    # category_target_dictionary = os.path.expanduser(f"~/Desktop/saved_data/episode/US/{formatted_date}")
     category_target_csv = f"{category_target_dictionary}.csv"
 
     df = pd.read_csv(category_target_csv)

@@ -35,19 +35,19 @@ def create_app():
         
         
     # # Register Blueprint Routes
-    # from .routes.podcasts.podcasts_routes import podcast_routes
-    # from .routes.regions.region_routes import region_routes
     from .routes.top_episodes.top_episode_routes import top_episodes_routes
     from .routes.episode.episodes_routes import episode_routes
     from .routes.episode_category.episode_category_routes import episode_category_routes
     from .routes.categories.category_chart_routes import category_chart_routes
+    from .routes.podcast.podcasts_routes import podcast_routes
+    from .routes.top_podcasts.top_podcast_routes import top_podcast_routes
     
     app.register_blueprint(top_episodes_routes)
     app.register_blueprint(episode_routes)
     app.register_blueprint(episode_category_routes)
     app.register_blueprint(category_chart_routes)
+    app.register_blueprint(podcast_routes)
+    app.register_blueprint(top_podcast_routes)
     
-    # app.register_blueprint(podcast_routes)
-    # app.register_blueprint(region_routes)
 
     return app

@@ -62,6 +62,7 @@ const NavBar = () => {
           </Link>
         </NavbarItem>
         <NavbarItem isActive className="bg-graphiteGray">
+        {/* <NavbarItem isActive className="bg-graphiteGray"> */}
           <Link aria-current="page" className="bg-graphiteGray" href="#">
             Episodes
           </Link>

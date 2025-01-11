@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
           ))}
         </div>
         <div className="content bg-transparent">
-          <div className="bg-[#5c6742]">te</div>
+          <div className="bg-[rgb(201, 240, 120)]">te</div>
         </div>
       </div>
       <svg style={{ position: "fixed", top: "100vh" }}>

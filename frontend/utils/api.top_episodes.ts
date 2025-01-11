@@ -4,7 +4,7 @@
 // * Get Top Episodes Data
 export const getTopEpisodes = async () => {
   try {
-    const res = await fetch('http://127.0.0.1:5000/api/top_episodes');
+    const res = await fetch('http://127.0.0.1:5000/api/top_episodes/');
     if (!res.ok) {
       throw new Error('Failed to fetch top episodes');
     }

@@ -4,6 +4,7 @@ import AsyncPagination from "@/components/table/AsyncPagination";
 // import PieChart from "@/components/chart/PieChart";
 import TrendingEpisode from "@/components/trending/TrendingEpisode";
 import TrendingCategory from "@/components/trending/TrendingCategory";
+import TrendingPodcast from "@/components/trending/TrendingPodcast";
 
 export default function Home() {
   // const customData = [
@@ -30,9 +31,7 @@ export default function Home() {
           {/* Trending podcast */}
           <div className=" w-1/2 rounded-xl border-1 border-borderColor flex flex-col p-4 gap-2 bg-obsidianShadow max-h-[25rem]">
             <h2 className="font-bold h4">🚀 Trending Podcast</h2>
-            <div>Trending episode</div>
-            <div>Trending episode</div>
-            <div>Trending episode</div>
+            <TrendingPodcast/>
           </div>
 
           {/* Chart */}
