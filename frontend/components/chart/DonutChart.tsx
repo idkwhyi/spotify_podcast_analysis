@@ -9,6 +9,8 @@ interface DataItem {
 
 interface DonutChartProps {
   data?: DataItem[];
+  title: string;
+  subtext: string;
   seriesName?: string;
 }
 
@@ -20,6 +22,8 @@ const DonutChart: React.FC<DonutChartProps> = ({
     { value: 484, name: "Union Ads" },
     { value: 300, name: "Video Ads" },
   ],
+  title = "Title",
+  subtext = "Subtext",
   seriesName = "Access From",
 }) => {
   const chartRef = useRef<HTMLDivElement>(null);
@@ -41,6 +45,20 @@ const DonutChart: React.FC<DonutChartProps> = ({
     // Update chart when data changes
     if (chartInstance.current) {
       const option = {
+        title: {
+          text: title,
+          subtext: subtext,
+          left: 'center',
+          textStyle: {
+            fontWeight: 'bold', // Make the title bold
+            fontSize: 18, // Title font size
+            color: 'rgb(236, 237, 238)', // Title text color
+          },
+          subtextStyle: {
+            fontSize: 14, // Subtitle font size
+            color: 'rgb(236, 237, 238)', // Subtitle text color
+          },
+        },
         tooltip: {
           trigger: "item",
         },

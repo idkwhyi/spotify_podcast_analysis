@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-// import PieChart from '../chart/PieChart';
 import DonutChart from '../chart/DonutChart';
 
 interface CategoryData {
@@ -14,6 +13,7 @@ interface CategoryData {
 
 const TrendingCategory: React.FC = () => {
   const [chartData, setChartData] = useState<CategoryData | null>(null);
+  const [mostFrequentCategory, setMostFrequentCategory] = useState<{ name: string; value: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -26,6 +26,17 @@ const TrendingCategory: React.FC = () => {
         }
         const data = await response.json();
         setChartData(data);
+
+        // Map category data
+        const countCategory = data.data.map((ct: { value: number; name: string; }) => ({
+          value: ct.value,
+          name: ct.name,
+        }));
+
+        // Find the most frequent category and its amount
+        const mostFrequent = countCategory.reduce((max: { value: number; }, item: { value: number; }) => (item.value > max.value ? item : max), countCategory[0]);
+        setMostFrequentCategory(mostFrequent);
+
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
@@ -49,14 +60,18 @@ const TrendingCategory: React.FC = () => {
   }
 
   return (
-    <div className="w-full h-full">
-      {/* <PieChart 
+    <div className="w-full h-full ">
+      {mostFrequentCategory && (
+        <p className="text-left text-lg my-4">
+          Most Popular category:  <span className="font-semibold text-primary">{mostFrequentCategory.name.charAt(0).toUpperCase() + mostFrequentCategory.name.slice(1)}</span> -{' '}
+          <span className="font-semibold text-primary">({mostFrequentCategory.value})</span>
+        </p>
+      )}
+
+      <DonutChart 
         data={chartData.data}
         title={chartData.title}
         subtext={chartData.subtext}
-      /> */}
-      <DonutChart 
-        data={chartData.data}
         seriesName="Category Distribution"
       />
     </div>
