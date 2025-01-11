@@ -78,6 +78,7 @@ const DonutChart: React.FC<DonutChartProps> = ({
             name: "Access From",
             type: "pie",
             radius: ["40%", "70%"],
+            center: ["60%", "50%"],
             avoidLabelOverlap: false,
             label: {
               show: false,
@@ -86,7 +87,7 @@ const DonutChart: React.FC<DonutChartProps> = ({
             emphasis: {
               label: {
                 show: true,
-                fontSize: 40,
+                fontSize: 32,
                 fontWeight: "bold",
                 color: "white",
                 formatter: (params: { name: string }) => {

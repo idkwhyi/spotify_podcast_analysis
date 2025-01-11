@@ -58,17 +58,17 @@ const NavBar = () => {
       <NavbarContent className="hidden sm:flex gap-4 bg-graphiteGray" justify="center">
         <NavbarItem className="bg-graphiteGray">
           <Link className="bg-graphiteGray" color="foreground" href="#">
-            Features
+            Podcasts
           </Link>
         </NavbarItem>
         <NavbarItem isActive className="bg-graphiteGray">
           <Link aria-current="page" className="bg-graphiteGray" href="#">
-            Customers
+            Episodes
           </Link>
         </NavbarItem>
         <NavbarItem className="bg-graphiteGray">
           <Link className="bg-graphiteGray" color="foreground" href="#">
-            Integrations
+            Categories
           </Link>
         </NavbarItem>
       </NavbarContent>
