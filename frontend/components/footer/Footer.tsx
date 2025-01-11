@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
   }));
 
   return (
-    <div className="body">
+    <div className="body bg-obsidianShadow rounded-t-3xl mt-10">
       <div className="main"></div>
       <div className="footer">
         <div className="bubbles">

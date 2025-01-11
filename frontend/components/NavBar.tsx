@@ -43,7 +43,7 @@ const NavBar = () => {
   ];
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} className="border-b border-b-borderColor bg-graphiteGray">
+    <Navbar onMenuOpenChange={setIsMenuOpen} className="border-b border-b-borderColor bg-graphiteGray text-foreground">
       <NavbarContent className="w-fit bg-graphiteGray">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}

@@ -23,12 +23,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-background">
       <body className={`${openSans.variable}`}>
         <NavBar />
-        <div className="px-14">{children}</div>
+        <div className="px-14">
+          {children}
+        </div>
       </body>
-      <Footer/>
+      <Footer />
     </html>
   );
 }
