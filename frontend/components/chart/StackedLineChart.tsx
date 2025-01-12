@@ -49,15 +49,16 @@ const StackedLineChart: React.FC<StackedLineChartProps> = ({
           trigger: "axis",
           textStyle: {
             fontSize: 14,
-            color: "#000",
+            color: "rgb(236, 237, 238)", // Change text color to rgb(236, 237, 238)
           },
+          backgroundColor: "rgb(44, 44, 44)", // Set background color to rgb(44, 44, 44)
           formatter: (params: any) => {
             // Ambil data tanggal dari parameter (sesuaikan dengan struktur data Anda)
             const date = params[0].axisValueLabel; // Gunakan `axisValueLabel` untuk tanggal jika ada di axis
             const sortedParams = params.sort(
               (a: any, b: any) => b.data - a.data
             );
-
+  
             // Format elemen tooltip untuk setiap data
             const tooltipItems = sortedParams.map(
               (item: any) => `
@@ -67,16 +68,17 @@ const StackedLineChart: React.FC<StackedLineChartProps> = ({
                 margin-bottom: 4px; 
                 gap: 8px;
                 width: 33%; /* Atur lebar tiap item agar menyesuaikan kolom */
+                background-color: rgb(44, 44, 44);
               ">
                 <span 
                   style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: ${item.color};">
                 </span>
-                <span style="font-weight: normal; color: #333;">${item.seriesName}:</span>
-                <span style="color: #000;">${item.data}</span>
+                <span style="font-weight: normal; color: rgb(236, 237, 238);">${item.seriesName}:</span>
+                <span style="color: rgb(236, 237, 238);">${item.data}</span>
               </div>
             `
             );
-
+  
             // Gabungkan tanggal dan elemen tooltip
             return `
               <div style="
@@ -84,13 +86,13 @@ const StackedLineChart: React.FC<StackedLineChartProps> = ({
                 flex-direction: column; 
                 max-width: 600px; 
                 padding: 10px; 
-                background-color: #fff; 
+                background-color: rgb(44, 44, 44); 
                 border-radius: 8px; 
                 box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); 
                 font-size: 12px;
                 line-height: 1.5;
               ">
-                <div style="font-weight: bold; margin-bottom: 8px; color: #333;">
+                <div style="font-weight: bold; margin-bottom: 8px; color: rgb(236, 237, 238);">
                   Date: ${date}
                 </div>
                 <div style="display: flex; flex-wrap: wrap;">
@@ -108,7 +110,7 @@ const StackedLineChart: React.FC<StackedLineChartProps> = ({
           extraCssText:
             "max-width: 600px; white-space: normal; word-wrap: break-word;",
         },
-
+  
         legend: {
           type: "scroll", // Membuat legend scrollable
           data: seriesData.map((series) => series.name),
@@ -160,10 +162,11 @@ const StackedLineChart: React.FC<StackedLineChartProps> = ({
           data: series.data,
         })),
       };
-
+  
       chartInstance.current.setOption(option);
     }
   }, [title, xAxisData, seriesData]);
+  
 
   // Handle window resize
   useEffect(() => {

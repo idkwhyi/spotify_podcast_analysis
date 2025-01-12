@@ -38,10 +38,10 @@ export default function Home() {
         </div>
 
         {/* Chart */}
-        <div className=" w-full rounded-xl border-1 border-borderColor flex flex-col p-4 mt-2 bg-obsidianShadow gap-2">
+        {/* <div className=" w-full rounded-xl border-1 border-borderColor flex flex-col p-4 mt-2 bg-obsidianShadow gap-2">
           <h2 className="font-bold h4">📊 Categories</h2>
           <TrendingCategory />
-        </div>
+        </div> */}
 
       </section>
 

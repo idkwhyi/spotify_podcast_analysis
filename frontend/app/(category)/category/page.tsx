@@ -81,9 +81,9 @@ const Page = () => {
 
   return (
     <div>
-      <h1>Top Episodes</h1>
-      <div>
-        <h1>Top Episodes Chart</h1>
+      <h1 className="h1 mt-16">Top Episodes</h1>
+      <p className="text-lg">Displayed categories trend based on daily podcast episode</p>
+      <div className="w-full h-auto center">
         {chartData ? (
           <StackedLineChart
             title="Episode Categories by Date"
