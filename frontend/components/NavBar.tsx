@@ -56,19 +56,21 @@ const NavBar = () => {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4 bg-graphiteGray" justify="center">
-        <NavbarItem className="bg-graphiteGray">
-          <Link className="bg-graphiteGray" color="foreground" href="#">
+
+        <NavbarItem isActive className="bg-graphiteGray">
+          <Link aria-current="page" className="bg-graphiteGray" href="#">
             Podcasts
           </Link>
         </NavbarItem>
+
         <NavbarItem isActive className="bg-graphiteGray">
-        {/* <NavbarItem isActive className="bg-graphiteGray"> */}
-          <Link aria-current="page" className="bg-graphiteGray" href="#">
+          <Link aria-current="page" className="bg-graphiteGray" href="/episode">
             Episodes
           </Link>
         </NavbarItem>
-        <NavbarItem className="bg-graphiteGray">
-          <Link className="bg-graphiteGray" color="foreground" href="#">
+        
+        <NavbarItem isActive className="bg-graphiteGray">
+          <Link className="bg-graphiteGray" href="#">
             Categories
           </Link>
         </NavbarItem>
