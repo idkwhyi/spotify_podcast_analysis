@@ -76,7 +76,7 @@ export default function EpisodePage() {
                       href={`https://open.spotify.com/episode/${episode.episode_uri}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-500 hover:text-blue-700"
+                      className="text-blue-400 hover:text-blue-600"
                     >
                       Listen on Spotify
                     </a>
@@ -86,7 +86,7 @@ export default function EpisodePage() {
                       href={`https://open.spotify.com/show/${episode.podcast_uri}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-500 hover:text-blue-700"
+                      className="text-blue-400 hover:text-blue-600"
                     >
                       View Podcast
                     </a>

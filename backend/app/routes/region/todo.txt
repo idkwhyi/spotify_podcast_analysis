@@ -1,5 +1,0 @@
-Region Table Routes
-GET /regions: Retrieve all regions.
-GET /regions/:region: Get details about a specific region.
-POST /regions: Add a new region.
-DELETE /regions/:region: Delete a region (ensure no dependencies exist).

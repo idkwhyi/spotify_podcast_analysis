@@ -1,11 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* 
-*{
-  background-color: rgb(31,31,31);
-  color: rgb(236, 237, 238);
-} */
 
 html, body {
   font-size: 16px;
@@ -64,3 +59,7 @@ table {
   width: 100%;
   table-layout: fixed; /* Memastikan kolom tetap teratur */
 }
+
+
+
+/* http://localhost:3000/episode/5wx5PQNkLH2w9adMgc0VTG */

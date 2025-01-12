@@ -11,6 +11,7 @@ import {
   Spinner,
 } from "@nextui-org/react";
 import Link from "next/link";
+import { CombinedEpisodeData } from "@/utils/api.episode";
 
 interface TopPodcast {
   top_podcast_id: string;
@@ -160,7 +161,7 @@ const TopPodcast = () => {
         case "NEW":
           return (
             <div className="flex flex-col">
-              <span className="text-blue-500">New Entry</span>
+              <span className="text-blue-400">New Entry</span>
               <span className="text-xs text-gray-400">First time in charts</span>
             </div>
           );
@@ -179,7 +180,7 @@ const TopPodcast = () => {
         <div>{error}</div>
         <button
           onClick={() => window.location.reload()}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-600"
         >
           Retry
         </button>
@@ -231,7 +232,7 @@ const TopPodcast = () => {
               <TableCell className="p-2">
                 <Link
                   href={`/podcast/${podcast.podcast_uri}`}
-                  className="text-blue-500 hover:text-blue-700"
+                  className="text-blue-400 hover:text-blue-600"
                 >
                   {podcast.podcast_name}
                 </Link>
@@ -244,7 +245,7 @@ const TopPodcast = () => {
                   href={`https://open.spotify.com/show/${podcast.podcast_uri}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-700"
+                  className="text-blue-400 hover:text-blue-600"
                 >
                   Listen
                 </a>

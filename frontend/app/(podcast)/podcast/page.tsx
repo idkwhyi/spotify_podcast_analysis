@@ -1,3 +1,5 @@
+"use client";
+
 import TopPodcast from '@/components/table/TopPodcast'
 import React from 'react'
 

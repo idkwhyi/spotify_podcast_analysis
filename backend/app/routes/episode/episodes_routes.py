@@ -34,6 +34,7 @@ def get_episode_by_category(category):
     except Exception as e:
         return jsonify({"error": str(e)}), 500  
 
+# * GET all episode by podcast_uri
 @episode_routes.route('/podcast/<string:podcast_uri>', methods=['GET'])
 def get_episode_by_podcast_uri(podcast_uri):
     try:

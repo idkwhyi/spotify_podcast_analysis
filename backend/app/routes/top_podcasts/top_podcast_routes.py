@@ -3,6 +3,7 @@ from app.models import TopPodcast
 
 top_podcast_routes = Blueprint('top_podcast_routes', __name__, url_prefix='/api/top_podcasts')
 
+# * get all top podcast
 @top_podcast_routes.route('/', methods=['GET'])
 def get_all_top_podcast():
     try:

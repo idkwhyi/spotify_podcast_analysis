@@ -3,16 +3,10 @@
 import AsyncPagination from "@/components/table/AsyncPagination";
 // import PieChart from "@/components/chart/PieChart";
 import TrendingEpisode from "@/components/trending/TrendingEpisode";
-// import TrendingCategory from "@/components/trending/TrendingCategory";
+import TrendingCategory from "@/components/trending/TrendingCategory";
 import TrendingPodcast from "@/components/trending/TrendingPodcast";
 
 export default function Home() {
-  // const customData = [
-  //   { value: 1048, name: "Search Engine" },
-  //   { value: 735, name: "Direct" },
-  //   // ... more data
-  // ];
-
   return (
     <div className="w-full bg-background text-foreground">
       <section className="w-full">
@@ -38,10 +32,10 @@ export default function Home() {
         </div>
 
         {/* Chart */}
-        {/* <div className=" w-full rounded-xl border-1 border-borderColor flex flex-col p-4 mt-2 bg-obsidianShadow gap-2">
+        <div className=" w-full rounded-xl border-1 border-borderColor flex flex-col p-4 mt-2 bg-obsidianShadow gap-2">
           <h2 className="font-bold h4">📊 Categories</h2>
           <TrendingCategory />
-        </div> */}
+        </div>
 
       </section>
 

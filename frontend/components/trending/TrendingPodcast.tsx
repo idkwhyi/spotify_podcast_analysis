@@ -91,7 +91,7 @@ const TrendingPodcast: React.FC = () => {
           className="w-full flex justify-start items-start rounded-md"
         >
           <p className="w-14">Rank</p>
-          <p className="w-full">Name</p>
+          <p className="w-full">Podcast Name</p>
         </li>
         {data.map((item, index) => (
           <li

@@ -1,6 +1,0 @@
-Podcast Table Routes
-GET /podcasts: Retrieve all podcasts with optional filters (e.g., by region, date, rank).
-GET /podcasts/:showURI: Retrieve details of a specific podcast by showURI.
-POST /podcasts: Add a new podcast.
-PUT /podcasts/:showURI: Update details of a podcast by showURI.
-DELETE /podcasts/:showURI: Delete a podcast by showURI.

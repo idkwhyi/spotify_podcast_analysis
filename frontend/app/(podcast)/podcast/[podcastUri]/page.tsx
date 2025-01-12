@@ -122,7 +122,7 @@ const PodcastDetail = () => {
     return (
       <div className="text-red-500 p-4 space-y-2">
         <div>{error}</div>
-        <Link href="/podcast" className="text-blue-500 hover:text-blue-700">
+        <Link href="/podcast" className="text-blue-400 hover:text-blue-600">
           ← Back to Podcasts
         </Link>
       </div>
@@ -135,7 +135,7 @@ const PodcastDetail = () => {
         Podcast not found
         <Link
           href="/podcast"
-          className="text-blue-500 hover:text-blue-700 ml-4"
+          className="text-blue-400 hover:text-blue-600 ml-4"
         >
           ← Back to Podcasts
         </Link>
@@ -152,7 +152,7 @@ const PodcastDetail = () => {
       {/* Navigation */}
       <Link
         href="/podcast"
-        className="text-blue-500 hover:text-blue-700 mb-4 inline-block"
+        className="text-blue-400 hover:text-blue-600 mb-4 inline-block"
       >
         ← Back to Podcasts
       </Link>
@@ -169,7 +169,7 @@ const PodcastDetail = () => {
             href={`https://open.spotify.com/show/${details.podcast_uri}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-500 hover:text-blue-700 mt-4 inline-block"
+            className="text-blue-400 hover:text-blue-600 mt-4 inline-block"
           >
             Listen on Spotify →
           </a>
@@ -215,7 +215,7 @@ const PodcastDetail = () => {
                     href={`https://open.spotify.com/episode/${episode.episode_uri}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-500 hover:text-blue-700"
+                    className="text-blue-400 hover:text-blue-600"
                   >
                     Listen
                   </a>

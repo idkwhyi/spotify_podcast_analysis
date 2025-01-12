@@ -4,7 +4,7 @@ from app.models import Date
 
 date_routes = Blueprint('date_routes', __name__, url_prefix='/api/dates')
 
-# * Get all category
+# * Get all Date
 @date_routes.route('/all', methods=['GET'])
 def get_all_dates():
     try:

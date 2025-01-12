@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 import React, { useEffect, useState } from "react";
 import {
   Table,
@@ -9,67 +10,85 @@ import {
   TableCell,
   getKeyValue,
 } from "@nextui-org/react";
-import { formatDate } from "@/utils/api.episode";
 
-// Interface untuk data kategori dan episode
 interface Category {
-  id: string; // Ensure `id` is a string
-  name: string; // This will be used to display the category name
-  category_name: string; // Assuming `category_name` is the key from the API response
+  id: string;
+  name: string;
+  category_name: string;
 }
 
-
-
-// interface Episode {
-//   episode_uri?: string;
-//   episode_name?: string;
-//   episode_description?: string;
-//   rank?: number;
-//   chart_rank_move?: "UP" | "DOWN" | "NEW";
-//   duration_ms?: string;
-//   episode_release_date?: string; // Add release_date here
-//   main_category?: string;
-// }
+interface TopEpisode {
+  top_episode_id: string;
+  rank: number;
+  chart_rank_move: "UP" | "DOWN" | "NEW";
+  date: string;
+  region_id: string;
+  episode_uri: string;
+}
 
 interface Episode {
   episode_uri: string;
   episode_name: string;
   episode_description: string;
-  rank: number;
-  chart_rank_move: "UP" | "DOWN" | "NEW";
+  rank?: number;
+  chart_rank_move?: "UP" | "DOWN" | "NEW";
   duration_ms: string;
-  episode_release_date: string; // Ensure this field exists in the interface
+  episode_release_date: string;
   main_category: string;
 }
 
 const EpisodeByCategory: React.FC = () => {
-  const [categories, setCategories] = useState<Category[]>([]); // Data kategori
-  const [selectedCategory, setSelectedCategory] = useState<string>(""); // Kategori yang dipilih
-  const [episodes, setEpisodes] = useState<Episode[]>([]); // Data episode
-  const [loading, setLoading] = useState<boolean>(false); // Loading state
-  const [error, setError] = useState<string | null>(null); // Error state
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [episodes, setEpisodes] = useState<Episode[]>([]);
+  const [topEpisodes, setTopEpisodes] = useState<TopEpisode[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const baseUrl = "http://127.0.0.1:5000/api"; // Base URL for the API
+  const baseUrl = "http://127.0.0.1:5000/api";
 
-  // Fetch categories data
+  // Fetch top episodes
+  useEffect(() => {
+    const fetchTopEpisodes = async () => {
+      try {
+        const res = await fetch(`${baseUrl}/top_episodes`);
+        const data = await res.json();
+        // Sort by date to get the most recent rankings
+        const sortedEpisodes = data.top_episodes.sort((a: TopEpisode, b: TopEpisode) => 
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        setTopEpisodes(sortedEpisodes);
+      } catch (err) {
+        console.error("Error fetching top episodes:", err);
+      }
+    };
+
+    fetchTopEpisodes();
+  }, []);
+
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return date.toISOString().split('T')[0];
+  };
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch(`${baseUrl}/category/all`); // Correct API URL for fetching categories
+        const res = await fetch(`${baseUrl}/category/all`);
         const data = await res.json();
 
         const categoriesList = data.categories.map(
-          (category: Category, index: number) => ({
-            id: index.toString(), // If you need an id, you can use the index or another unique value
-            name: category.category_name, // Map category_name to name
+          (category: { category_name: string }, index: number) => ({
+            id: index.toString(),
+            name: category.category_name,
+            category_name: category.category_name
           })
         );
 
-        setCategories(categoriesList); // Set categories state
+        setCategories(categoriesList);
 
-        // Set default selected category to the first category (if any categories exist)
         if (categoriesList.length > 0) {
-          setSelectedCategory(categoriesList[0].name); // Set default to first category's id
+          setSelectedCategory(categoriesList[0].category_name);
         }
       } catch (err) {
         console.error("Error fetching categories:", err);
@@ -80,20 +99,32 @@ const EpisodeByCategory: React.FC = () => {
     fetchCategories();
   }, []);
 
-  // Fetch episodes by selected category
   useEffect(() => {
     const fetchEpisodes = async () => {
       if (!selectedCategory) return;
-      console.info("SELECTED", selectedCategory);
       setLoading(true);
       setError(null);
 
       try {
         const res = await fetch(
-          `${baseUrl}/episode/category/${selectedCategory}`
-        ); // Correct API URL for fetching episodes by category
+          `${baseUrl}/episode/category/${encodeURIComponent(selectedCategory)}`
+        );
         const data = await res.json();
-        setEpisodes(data.episodes); // Assuming the API returns an object with an `episodes` field
+        
+        // Merge episode data with top episodes data
+        const mergedEpisodes = data.episodes.map((episode: Episode) => {
+          const topEpisodeData = topEpisodes.find(
+            (topEp) => topEp.episode_uri === episode.episode_uri
+          );
+          
+          return {
+            ...episode,
+            rank: topEpisodeData?.rank || null,
+            chart_rank_move: topEpisodeData?.chart_rank_move || null
+          };
+        });
+
+        setEpisodes(mergedEpisodes);
       } catch (err) {
         setError("Failed to fetch episode data");
         console.error("Error fetching episodes:", err);
@@ -103,19 +134,44 @@ const EpisodeByCategory: React.FC = () => {
     };
 
     fetchEpisodes();
-  }, [selectedCategory]); // Fetch episodes when selectedCategory changes
+  }, [selectedCategory, topEpisodes]);
 
-  // Format episode duration
   const formatDuration = (ms: string) => {
     const minutes = Math.floor(parseInt(ms) / 60000);
     const seconds = Math.floor((parseInt(ms) % 60000) / 1000);
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
-  // Columns for the episode table
+  const getRankMoveIcon = (move: string | undefined) => {
+    if (!move) return "-";
+    switch (move) {
+      case "UP":
+        return "↑";
+      case "DOWN":
+        return "↓";
+      case "NEW":
+        return "NEW";
+      default:
+        return "-";
+    }
+  };
+
+  const getRankMoveColor = (move: string | undefined) => {
+    if (!move) return "text-gray-500";
+    switch (move) {
+      case "UP":
+        return "text-green-500";
+      case "DOWN":
+        return "text-red-500";
+      case "NEW":
+        return "text-blue-500";
+      default:
+        return "text-gray-500";
+    }
+  };
+
   const columns = [
     { key: "episode_name", label: "Episode Name" },
-    // { key: "episode_description", label: "Description" },
     { key: "rank", label: "Rank" },
     { key: "chart_rank_move", label: "Chart Move" },
     { key: "duration_ms", label: "Duration" },
@@ -125,15 +181,13 @@ const EpisodeByCategory: React.FC = () => {
 
   const capitalizeWords = (str: string) => {
     return str
-      .split(" ") // Memisahkan string berdasarkan spasi
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Membuat huruf pertama kapital
-      .join(" "); // Menggabungkan kembali kata-kata menjadi string
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
   };
 
-  const tableColumnStyle =
-    "text-left z-20 p-2 bg-obsidianShadow border border-borderColor";
-
-  const tableItemsStyle = "p-2 border border-borderColor px-2"
+  const tableColumnStyle = "text-left z-20 p-2 bg-obsidianShadow border border-borderColor";
+  const tableItemsStyle = "p-2 border border-borderColor px-2";
 
   return (
     <div>
@@ -146,17 +200,15 @@ const EpisodeByCategory: React.FC = () => {
           className="bg-obsidianShadow border border-foreground rounded-lg"
         >
           {categories.map((category) => (
-            <option key={category.id} value={category.id}>
+            <option key={category.id} value={category.category_name}>
               {capitalizeWords(category.name)}
             </option>
           ))}
         </select>
       </div>
 
-      {/* Display error if any */}
       {error && <div style={{ color: "red" }}>{error}</div>}
 
-      {/* Display loading message if data is loading */}
       {loading ? (
         <div>Loading episodes...</div>
       ) : (
@@ -171,13 +223,9 @@ const EpisodeByCategory: React.FC = () => {
             </TableHeader>
             <TableBody items={episodes}>
               {(item) => (
-                <TableRow
-                  key={item.episode_uri}
-                  className={tableItemsStyle}
-                >
+                <TableRow key={item.episode_uri} className={tableItemsStyle}>
                   {(columnKey) => {
                     if (columnKey === "duration_ms") {
-                      // Ensure columnKey is a string before using it to access item
                       const duration = item[columnKey as keyof Episode];
                       if (typeof duration === "string") {
                         return (
@@ -201,19 +249,36 @@ const EpisodeByCategory: React.FC = () => {
                     }
                     if (columnKey === "episode_name") {
                       return (
-                        <TableCell>
+                        <TableCell className={tableItemsStyle}>
                           <a
                             href={`http://localhost:3000/episode/${item.episode_uri}`}
                             target="_blank"
                             rel="noopener noreferrer"
+                            className="text-blue-400"
                           >
                             {item[columnKey as keyof Episode]}
                           </a>
                         </TableCell>
                       );
                     }
+                    if (columnKey === "chart_rank_move") {
+                      return (
+                        <TableCell className={tableItemsStyle}l>
+                          <span className={getRankMoveColor(item.chart_rank_move)}>
+                            {getRankMoveIcon(item.chart_rank_move)}
+                          </span>
+                        </TableCell>
+                      );
+                    }
+                    if (columnKey === "rank") {
+                      return (
+                        <TableCell className={tableItemsStyle}>
+                          {item.rank || "-"}
+                        </TableCell>
+                      );
+                    }
                     return (
-                      <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                      <TableCell className={tableItemsStyle}>{getKeyValue(item, columnKey)}</TableCell>
                     );
                   }}
                 </TableRow>

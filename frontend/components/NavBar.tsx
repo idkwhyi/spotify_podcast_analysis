@@ -9,7 +9,7 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   Link,
-  Button,
+  // Button,
 } from "@nextui-org/react";
 
 export const AcmeLogo = () => {
@@ -76,9 +76,9 @@ const NavBar = () => {
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarContent justify="end">
+      {/* <NavbarContent justify="end">
         <Button className="bg-primary text-black px-5 py-2 rounded-md">Trending</Button>
-      </NavbarContent>
+      </NavbarContent> */}
       
       <NavbarMenu>
         {menuItems.map((item, index) => (

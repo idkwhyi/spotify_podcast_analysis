@@ -143,7 +143,7 @@ const AsyncEpisodeTable = () => {
       case "NEW":
         return (
           <div className="flex flex-col">
-            <span className="text-blue-500">New Entry</span>
+            <span className="text-blue-400">New Entry</span>
             <span className="text-xs text-gray-400">First time in charts</span>
           </div>
         );
@@ -159,7 +159,7 @@ const AsyncEpisodeTable = () => {
         <div className="text-sm text-gray-500">{debugInfo}</div>
         <button
           onClick={() => list.reload()}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-600"
         >
           Retry
         </button>
@@ -228,7 +228,7 @@ const AsyncEpisodeTable = () => {
               <TableCell className="p-2">
                 <Link
                   href={`/episode/${item.episode_uri}`}
-                  className="text-blue-500 hover:text-blue-700 cursor-pointer"
+                  className="text-blue-400 hover:text-blue-600 cursor-pointer"
                 >
                   {item.episode_name}
                 </Link>
@@ -245,7 +245,7 @@ const AsyncEpisodeTable = () => {
                   href={`https://open.spotify.com/episode/${item.episode_uri}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-700"
+                  className="text-blue-400 hover:text-blue-600"
                 >
                   Listen
                 </a>

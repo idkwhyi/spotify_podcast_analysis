@@ -5,6 +5,7 @@ from app.models import Category, episode_categories, Date, TopEpisode
 
 category_chart_routes = Blueprint('category_chart_routes', __name__, url_prefix='/api/charts')
 
+# * Visualisasi di pie chart bagian home
 @category_chart_routes.route('/category-distribution', methods=['GET'])
 def get_category_distribution():
     try:
