@@ -1,7 +1,10 @@
 mysqlclient
 uuid6
-flask
-flask_cors
-flask_sqlalchemy
 flask_migrate
 python-dotenv
+Flask
+flask-cors
+flask-sqlalchemy
+flask-migrate
+
+

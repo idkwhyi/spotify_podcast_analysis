@@ -1,2 +1,8 @@
-# Required libraries
+spacy
 pandas
+numpy
+scikit-learn
+joblib
+requests
+mysql-connector-python
+python-dotenv

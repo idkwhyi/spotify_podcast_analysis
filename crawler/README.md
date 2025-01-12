@@ -23,12 +23,8 @@
     pip install -r requirements.txt
   ```
 
-3. p
-
-
-TODO:
-region ✅
-token ✅
-get_podcast_data ✅
-get_episode_data ✅
-get_category 
+3. ** Running the File **
+  3.1. main.py
+  Run this code to get spotify data and save it to CSV
+  3.2. pushDb.py
+  Run this code to push spotify data to database

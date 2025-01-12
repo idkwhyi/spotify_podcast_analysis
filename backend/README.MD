@@ -22,3 +22,15 @@ Use this code below to install all the libraries needed
 """
   pip install -r requirements.txt
 """
+
+
+### 4. Run the backend
+Run backend app from run.py
+"""
+  python3 run.py
+"""
+
+If the code above doesn't work, use this code instead
+"""
+  python run.py
+"""

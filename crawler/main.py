@@ -1,17 +1,3 @@
-'''
-    alur:
-        get episode data 
-        get podcast data
-        
-    requirements: 
-        date.now that have been formatted
-        
-    utility:
-        automatically create the directory
-        
-        
-'''
-
 from datetime import datetime, date
 from podcast.get_podcast_data import get_podcast_data
 from episode.get_episode_data import get_episode_data
