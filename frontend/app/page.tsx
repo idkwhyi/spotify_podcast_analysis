@@ -45,7 +45,8 @@ export default function Home() {
 
       </section>
 
-      <section className="mt-5 bg-background">
+      <section className="mt-10 bg-background">
+        <h2 className="font-bold h2 mb-2">Trending Episodes Ranking</h2>
         <AsyncPagination />
       </section>
 
