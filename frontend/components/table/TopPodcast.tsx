@@ -189,8 +189,8 @@ const TopPodcast = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Top Podcasts</h1>
+      <div className="flex justify-between items-center mb-4 ">
+        <h1 className="h1 font-bold mt-4">Top Podcasts</h1>
         <div className="text-gray-400">
           Rankings for {currentDate}
         </div>

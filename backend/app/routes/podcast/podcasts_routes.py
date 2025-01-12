@@ -19,7 +19,6 @@ def get_podcast_by_uri(podcast_uri):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 def serialize_podcast(podcast):
     """Helper function to serialize podcast object to dictionary."""
     return {

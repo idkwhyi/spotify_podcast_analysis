@@ -34,6 +34,20 @@ def get_episode_by_category(category):
     except Exception as e:
         return jsonify({"error": str(e)}), 500  
 
+@episode_routes.route('/podcast/<string:podcast_uri>', methods=['GET'])
+def get_episode_by_podcast_uri(podcast_uri):
+    try:
+        episodes_in_podcast = Episode.query.filter_by(podcast_uri=podcast_uri).all()
+        
+        if not episodes_in_podcast:
+            return jsonify({'error': "No Episodes data in this podcast"}), 404
+        
+        episode_data = [serialize_top_episode(episode) for episode in episodes_in_podcast]
+        return jsonify({"episodes": episode_data}), 200
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500  
+
 def serialize_top_episode(episode):
     """Helper function to serialize episode object to dictionary."""
     return {
