@@ -3,7 +3,7 @@
 import AsyncPagination from "@/components/table/AsyncPagination";
 // import PieChart from "@/components/chart/PieChart";
 import TrendingEpisode from "@/components/trending/TrendingEpisode";
-import TrendingCategory from "@/components/trending/TrendingCategory";
+// import TrendingCategory from "@/components/trending/TrendingCategory";
 import TrendingPodcast from "@/components/trending/TrendingPodcast";
 
 export default function Home() {

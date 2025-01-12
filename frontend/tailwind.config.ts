@@ -58,6 +58,7 @@ export default {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
+      
   	}
   },
   plugins: [tailwindcssAnimate, nextui()],

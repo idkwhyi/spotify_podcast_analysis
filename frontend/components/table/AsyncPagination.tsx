@@ -15,11 +15,18 @@ import { useAsyncList } from "@react-stately/data";
 import Link from "next/link";
 import { fetchTopEpisodes, fetchEpisodeDetails, formatDate, type CombinedEpisodeData } from "@/utils/api.episode";
 
+const LoadingScreen = () => (
+  <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
+    <Spinner size="lg" color="primary"/>
+    <p className="text-gray-400">Loading top episodes...</p>
+  </div>
+);
 
 const AsyncEpisodeTable = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentDate, setCurrentDate] = useState<string>("");
   const [debugInfo, setDebugInfo] = useState<string>("");
 
   const list = useAsyncList<CombinedEpisodeData>({
@@ -42,6 +49,7 @@ const AsyncEpisodeTable = () => {
         }
 
         const mostRecentDateStr = formatDate(new Date(mostRecentDate).toISOString());
+        setCurrentDate(new Date(mostRecentDate).toLocaleDateString());
         
         // Filter episodes for the most recent date
         const latestEpisodes = json.top_episodes.filter(episode => {
@@ -49,12 +57,31 @@ const AsyncEpisodeTable = () => {
           return episodeDate === mostRecentDateStr;
         });
 
-        const episodeDetailsPromises = latestEpisodes.map(episode =>
+        // Get previous day's data for comparison
+        const previousDay = new Date(mostRecentDate);
+        previousDay.setDate(previousDay.getDate() - 1);
+        const previousDayStr = formatDate(previousDay.toISOString());
+        const previousDayEpisodes = json.top_episodes.filter(episode => 
+          formatDate(episode.date) === previousDayStr
+        );
+
+        // Enhance episodes with previous rank information
+        const enhancedEpisodes = latestEpisodes.map(episode => {
+          const previousEpisode = previousDayEpisodes.find(prev => 
+            prev.episode_uri === episode.episode_uri
+          );
+          return {
+            ...episode,
+            previous_rank: previousEpisode?.rank
+          };
+        });
+
+        const episodeDetailsPromises = enhancedEpisodes.map(episode =>
           fetchEpisodeDetails(episode.episode_uri)
         );
         const episodeDetailsResults = await Promise.all(episodeDetailsPromises);
 
-        const enhancedResults = latestEpisodes.map((episode, index) => {
+        const enhancedResults = enhancedEpisodes.map((episode, index) => {
           const details = episodeDetailsResults[index];
           if (!details) return null;
 
@@ -93,16 +120,35 @@ const AsyncEpisodeTable = () => {
 
   const tableColumnStyle = 'text-left z-20 p-2 bg-obsidianShadow border-y border-y-borderColor';
 
-  const getRankChangeDisplay = (change: "UP" | "DOWN" | "NEW") => {
-    switch (change) {
+  const getRankChangeDisplay = (item: CombinedEpisodeData & { previous_rank?: number }) => {
+    const rankDiff = item.previous_rank ? item.previous_rank - item.rank : 0;
+    
+    switch (item.chart_rank_move) {
       case "UP":
-        return <span className="text-green-500">↑ Up</span>;
+        return (
+          <div className="flex flex-col">
+            <span className="text-green-500">↑ Up</span>
+            <span className="text-sm text-green-400">{`+${rankDiff} positions`}</span>
+            <span className="text-xs text-gray-400">{`Previous: #${item.previous_rank}`}</span>
+          </div>
+        );
       case "DOWN":
-        return <span className="text-red-500">↓ Down</span>;
+        return (
+          <div className="flex flex-col">
+            <span className="text-red-500">↓ Down</span>
+            <span className="text-sm text-red-400">{`${rankDiff} positions`}</span>
+            <span className="text-xs text-gray-400">{`Previous: #${item.previous_rank}`}</span>
+          </div>
+        );
       case "NEW":
-        return <span className="text-blue-500">New</span>;
+        return (
+          <div className="flex flex-col">
+            <span className="text-blue-500">New Entry</span>
+            <span className="text-xs text-gray-400">First time in charts</span>
+          </div>
+        );
       default:
-        return change;
+        return item.chart_rank_move;
     }
   };
 
@@ -123,7 +169,21 @@ const AsyncEpisodeTable = () => {
 
   return (
     <div className="space-y-4">
-      {debugInfo && <div className="text-sm text-gray-500 p-2">{debugInfo}</div>}
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Top Episodes</h1>
+        <div className="text-gray-400">
+          Rankings for {currentDate}
+        </div>
+      </div>
+      
+      <div className="bg-blue-900/20 p-4 rounded-lg mb-4">
+        <h2 className="text-lg font-semibold mb-2">Daily Episode Rankings</h2>
+        <p className="text-gray-300">
+          These rankings show the most popular episodes for today. Rank changes and positions 
+          are compared to the previous day&apos;s rankings.
+        </p>
+      </div>
+
       <Table
         isHeaderSticky
         aria-label="Episode rankings table with infinite pagination"
@@ -156,7 +216,7 @@ const AsyncEpisodeTable = () => {
         <TableBody
           isLoading={isLoading}
           items={list.items}
-          loadingContent={<Spinner color="white" />}
+          loadingContent={<LoadingScreen />}
           className="bg-background"
         >
           {(item) => (
@@ -164,7 +224,7 @@ const AsyncEpisodeTable = () => {
               key={`${item.episode_uri}-${item.rank}`} 
               className="border-b border-b-borderColor"
             >
-              <TableCell className="p-2">{item.rank}</TableCell>
+              <TableCell className="p-2">#{item.rank}</TableCell>
               <TableCell className="p-2">
                 <Link
                   href={`/episode/${item.episode_uri}`}
@@ -172,8 +232,13 @@ const AsyncEpisodeTable = () => {
                 >
                   {item.episode_name}
                 </Link>
+                {item.episode_description && (
+                  <p className="text-sm text-gray-400 truncate mt-1">
+                    {item.episode_description}
+                  </p>
+                )}
               </TableCell>
-              <TableCell className="p-2">{getRankChangeDisplay(item.chart_rank_move)}</TableCell>
+              <TableCell className="p-2">{getRankChangeDisplay(item)}</TableCell>
               <TableCell className="p-2">{item.region_id}</TableCell>
               <TableCell className="p-2">
                 <a

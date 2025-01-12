@@ -5,6 +5,7 @@ import {
   calculateCategoryCount,
 } from "@/utils/api.category";
 import StackedLineChart from "@/components/chart/StackedLineChart";
+import EpisodeByCategory from "./EpisodeByCategory";
 
 interface CombinedEpisodeData {
   top_episode_id: string;
@@ -23,8 +24,8 @@ interface CombinedEpisodeData {
 
 const Page = () => {
   const [chartData, setChartData] = useState<any>(null);
-  const [episodes, setEpisodes] = useState<CombinedEpisodeData[]>([]); // Menyimpan data episode
-  const [loading, setLoading] = useState<boolean>(true); 
+  // const [episodes, setEpisodes] = useState<CombinedEpisodeData[]>([]); // Menyimpan data episode
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null); // Menyimpan error jika ada
 
   // Chart useEffect
@@ -50,28 +51,30 @@ const Page = () => {
         setChartData({ xAxisData, seriesData });
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  useEffect(() => {
-    // Fungsi untuk mengambil data episode
-    const fetchEpisodes = async () => {
-      try {
-        const data = await getCombinedEpisodeData(); // Ambil data episode
-        setEpisodes(data); // Simpan data dalam state
-      } catch (err) {
-        setError("Failed to fetch episode data"); // Menangani error
-        console.error("Error fetching episodes:", err);
-      } finally {
-        setLoading(false); // Setelah selesai, ubah loading menjadi false
-      }
-    };
+  // useEffect(() => {
+  //   // Fungsi untuk mengambil data episode
+  //   const fetchEpisodes = async () => {
+  //     try {
+  //       const data = await getCombinedEpisodeData(); // Ambil data episode
+  //       setEpisodes(data); // Simpan data dalam state
+  //     } catch (err) {
+  //       setError("Failed to fetch episode data"); // Menangani error
+  //       console.error("Error fetching episodes:", err);
+  //     } finally {
+  //       setLoading(false); // Setelah selesai, ubah loading menjadi false
+  //     }
+  //   };
 
-    fetchEpisodes(); // Panggil fungsi untuk ambil data
-  }, []); // Hanya dijalankan sekali saat pertama kali komponen dirender
+  //   fetchEpisodes(); // Panggil fungsi untuk ambil data
+  // }, []); // Hanya dijalankan sekali saat pertama kali komponen dirender
 
   // Jika data sedang dimuat
   if (loading) return <div>Loading...</div>;
@@ -82,17 +85,25 @@ const Page = () => {
   return (
     <div>
       <h1 className="h1 mt-16">Top Episodes</h1>
-      <p className="text-lg">Displayed categories trend based on daily podcast episode</p>
-      <div className="w-full h-auto center">
-        {chartData ? (
-          <StackedLineChart
-            title="Episode Categories by Date"
-            xAxisData={chartData.xAxisData}
-            seriesData={chartData.seriesData}
-          />
-        ) : (
-          <p>Loading chart data...</p>
-        )}
+      <p className="text-lg">
+        Displayed categories trend based on daily podcast episode
+      </p>
+      <div className="w-full flex flex-col gap-20">
+        <div className="w-full h-auto center">
+          {chartData ? (
+            <StackedLineChart
+              title=""
+              xAxisData={chartData.xAxisData}
+              seriesData={chartData.seriesData}
+            />
+          ) : (
+            <p>Loading chart data...</p>
+          )}
+        </div>
+        <div>
+          <h2 className="h2">Episode By Category</h2>
+          <EpisodeByCategory />
+        </div>
       </div>
     </div>
   );
@@ -112,7 +123,6 @@ const Page = () => {
 // };
 
 export default Page;
-
 
 // {/* <ul>
 // {episodes.map((episode, index) => (

@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify
 from app import db
 from app.models import Episode, Category, episode_categories
 
-episode_category_routes = Blueprint('category_routes', __name__, url_prefix='/api/episode_category')
+episode_category_routes = Blueprint('episode_category_routes', __name__, url_prefix='/api/episode_category')
 
 # * Get episode categories by episode URI
 @episode_category_routes.route('/episode/<string:episode_uri>', methods=['GET'])

@@ -3,7 +3,8 @@ import AsyncEpisodeTable from '@/components/table/AsyncPagination'
 
 const page = () => {
   return (
-    <div>
+    <div className='py-4'>
+      <h1 className='h1'>Daily Episode Ranking</h1>
       <AsyncEpisodeTable/>
     </div>
   )

@@ -53,3 +53,14 @@ html, body {
   content: '▶'; /* Right-pointing arrow */
   transform: none;
 }
+
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%; /* Pastikan tabel tidak melewati batas container */
+}
+
+table {
+  width: 100%;
+  table-layout: fixed; /* Memastikan kolom tetap teratur */
+}
