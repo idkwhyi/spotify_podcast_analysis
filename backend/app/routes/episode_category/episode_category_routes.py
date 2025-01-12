@@ -25,7 +25,7 @@ def get_episode_category_by_episode(episode_uri):
     except Exception as e:
         return jsonify({"error": f"Error fetching episode categories: {str(e)}"}), 500
 
-# * Get episodes by category
+# * Get episode categories by category
 @episode_category_routes.route('/category/<string:category_id>', methods=['GET'])
 def get_episode_category_by_category(category_id):
     try:

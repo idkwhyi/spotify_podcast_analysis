@@ -3,7 +3,7 @@ from app.models import TopEpisode
 
 top_episodes_routes = Blueprint('top_episodes_routes', __name__, url_prefix='/api/top_episodes')
 
-
+# * GET all top episodes
 @top_episodes_routes.route('/', methods=['GET'])
 def get_all_top_episodes():
     try:

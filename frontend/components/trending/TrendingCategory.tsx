@@ -63,7 +63,7 @@ const TrendingCategory: React.FC = () => {
     <div className="w-full h-full ">
       {mostFrequentCategory && (
         <p className="text-left text-lg my-4">
-          Most Popular category:  <span className="font-semibold text-primary">{mostFrequentCategory.name.charAt(0).toUpperCase() + mostFrequentCategory.name.slice(1)}</span> -{' '}
+          Most Popular category -  <span className="font-semibold text-primary">{mostFrequentCategory.name.charAt(0).toUpperCase() + mostFrequentCategory.name.slice(1)}</span> -{' '}
           <span className="font-semibold text-primary">({mostFrequentCategory.value})</span>
         </p>
       )}

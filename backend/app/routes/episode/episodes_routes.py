@@ -4,6 +4,7 @@ from app import db
 
 episode_routes = Blueprint('episode_routes', __name__, url_prefix='/api/episode')
 
+# * GET episode detail by episode_uri
 @episode_routes.route('/<string:episode_uri>', methods=['GET'])
 def get_episode_by_uri(episode_uri):
     try:

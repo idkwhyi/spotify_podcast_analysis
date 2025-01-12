@@ -41,6 +41,7 @@ def create_app():
     from .routes.categories.category_chart_routes import category_chart_routes
     from .routes.podcast.podcasts_routes import podcast_routes
     from .routes.top_podcasts.top_podcast_routes import top_podcast_routes
+    from .routes.date.dates_routes import date_routes
     
     app.register_blueprint(top_episodes_routes)
     app.register_blueprint(episode_routes)
@@ -48,6 +49,7 @@ def create_app():
     app.register_blueprint(category_chart_routes)
     app.register_blueprint(podcast_routes)
     app.register_blueprint(top_podcast_routes)
+    app.register_blueprint(date_routes)
     
 
     return app

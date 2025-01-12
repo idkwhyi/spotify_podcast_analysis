@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
 from sqlalchemy import func, desc
 from app import db
-from app.models import Episode, Category, episode_categories, Date, TopEpisode
+from app.models import Category, episode_categories, Date, TopEpisode
 
 category_chart_routes = Blueprint('category_chart_routes', __name__, url_prefix='/api/charts')
 

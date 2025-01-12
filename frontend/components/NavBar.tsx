@@ -51,26 +51,26 @@ const NavBar = () => {
         />
         <NavbarBrand className="bg-graphiteGray">
           <AcmeLogo />
-          <p className="font-bold text-inherit bg-graphiteGray">ASPY</p>
+          <Link href="/" className="font-bold text-inherit bg-graphiteGray">ASPY</Link>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4 bg-graphiteGray" justify="center">
 
         <NavbarItem isActive className="bg-graphiteGray">
-          <Link aria-current="page" className="bg-graphiteGray" href="#">
+          <Link aria-current="page" className="bg-graphiteGray text-foreground" href="/podcast">
             Podcasts
           </Link>
         </NavbarItem>
 
         <NavbarItem isActive className="bg-graphiteGray">
-          <Link aria-current="page" className="bg-graphiteGray" href="/episode">
+          <Link aria-current="page" className="bg-graphiteGray text-foreground" href="/episode">
             Episodes
           </Link>
         </NavbarItem>
         
         <NavbarItem isActive className="bg-graphiteGray">
-          <Link className="bg-graphiteGray" href="#">
+          <Link className="bg-graphiteGray text-foreground" href="/category">
             Categories
           </Link>
         </NavbarItem>
