@@ -21,7 +21,6 @@ def main():
     
     
     #! Get Category from episode data
-    file_date = '31_12_2024'
     category_target_dictionary = os.path.expanduser(f"~/Desktop/saved_data/episode/US/{formatted_date}")
     category_target_csv = f"{category_target_dictionary}.csv"
 
