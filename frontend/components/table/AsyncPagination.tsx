@@ -113,6 +113,17 @@ const AsyncEpisodeTable = () => {
     },
   });
 
+  const formatDuration = (ms: string) => {
+    const minutes = Math.floor(parseInt(ms) / 60000);
+    const seconds = Math.floor((parseInt(ms) % 60000) / 1000);
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return date.toISOString().split('T')[0];
+  };
+
   const [loaderRef, scrollerRef] = useInfiniteScroll({
     hasMore,
     onLoadMore: list.loadMore
@@ -210,6 +221,8 @@ const AsyncEpisodeTable = () => {
           <TableColumn key="rank" className={tableColumnStyle}>Rank</TableColumn>
           <TableColumn key="episode_name" className={tableColumnStyle}>Episode Name</TableColumn>
           <TableColumn key="chart_rank_move" className={tableColumnStyle}>Rank Change</TableColumn>
+          <TableColumn key="duration" className={tableColumnStyle}>Duration</TableColumn>
+          <TableColumn key="release_date" className={tableColumnStyle}>Release Date</TableColumn>
           <TableColumn key="region_id" className={tableColumnStyle}>Region</TableColumn>
           <TableColumn key="episode_uri" className={tableColumnStyle}>Episode Link</TableColumn>
         </TableHeader>
@@ -239,6 +252,8 @@ const AsyncEpisodeTable = () => {
                 )}
               </TableCell>
               <TableCell className="p-2">{getRankChangeDisplay(item)}</TableCell>
+              <TableCell className="p-2">{formatDuration(item.duration_ms)}</TableCell>
+              <TableCell className="p-2">{formatDate(item.episode_release_date)}</TableCell>
               <TableCell className="p-2">{item.region_id}</TableCell>
               <TableCell className="p-2">
                 <a
