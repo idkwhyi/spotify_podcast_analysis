@@ -66,7 +66,7 @@ export const fetchEpisodeDetails = async (episodeUri: string): Promise<EpisodeDe
     }
     const data: EpisodeResponse = await response.json();
 
-    console.log(data.episode)
+    // console.log(data.episode)
     return data.episode;
   } catch (error) {
     console.error("Error fetching episode details:", error);

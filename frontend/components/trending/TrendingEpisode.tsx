@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 // Mengimpor fungsi getTopEpisodes dan getEpisodeByUri
 import { getTopEpisodes } from "@/utils/api.top_episodes";
@@ -53,7 +54,7 @@ const TrendingEpisode: React.FC = () => {
           );
 
           const topEpisodes = sortedData.slice(0, 5);
-          setData(topEpisodes); 
+          setData(topEpisodes);
 
           const episodeUris = topEpisodes.map(
             (episode: TopEpisodeData) => episode.episode_uri
@@ -91,19 +92,22 @@ const TrendingEpisode: React.FC = () => {
   return (
     <div>
       <ul className="w-full flex flex-col space-y-4">
-        <li
-          className="w-full flex justify-start items-start rounded-md"
-        >
+        <li className="w-full flex justify-start items-start rounded-md">
           <p className="w-14">Rank</p>
           <p className="w-full">Episode Name</p>
         </li>
         {data.map((item, index) => (
           <li
             key={index}
-             className="w-full flex justify-start items-start rounded-md"
+            className="w-full flex justify-start items-start rounded-md"
           >
             <p className="w-14">{item.rank}.</p>
-            <p className="w-full">{episodeDetails[index]?.episode_name}</p>
+            <Link
+              href={`/episode/${episodeDetails[index]?.episode_uri}`}
+              className="text-blue-400 hover:text-blue-600 cursor-pointer"
+            >
+              {episodeDetails[index]?.episode_name}
+            </Link>
           </li>
         ))}
       </ul>

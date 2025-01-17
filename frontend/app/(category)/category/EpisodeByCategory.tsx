@@ -176,7 +176,7 @@ const EpisodeByCategory: React.FC = () => {
     { key: "chart_rank_move", label: "Chart Move" },
     { key: "duration_ms", label: "Duration" },
     { key: "episode_release_date", label: "Release Date" },
-    { key: "main_category", label: "Main Category" },
+    { key: "main_category", label: "Category" },
   ];
 
   const capitalizeWords = (str: string) => {

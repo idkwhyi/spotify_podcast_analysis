@@ -5,6 +5,7 @@ import AsyncPagination from "@/components/table/AsyncPagination";
 import TrendingEpisode from "@/components/trending/TrendingEpisode";
 import TrendingCategory from "@/components/trending/TrendingCategory";
 import TrendingPodcast from "@/components/trending/TrendingPodcast";
+import CategoryTable from "@/components/table/CategoryTable";
 
 export default function Home() {
   return (
@@ -35,6 +36,10 @@ export default function Home() {
         <div className=" w-full rounded-xl border-1 border-borderColor flex flex-col p-4 mt-2 bg-obsidianShadow gap-2">
           <h2 className="font-bold h4">📊 Categories</h2>
           <TrendingCategory />
+        </div>
+
+        <div>
+          <CategoryTable/>
         </div>
 
       </section>

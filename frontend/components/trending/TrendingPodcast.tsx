@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 // Mengimpor fungsi getTopEpisodes dan getEpisodeByUri
 import { getTopPodcasts } from "@/utils/api.top_podcast";
@@ -99,7 +100,12 @@ const TrendingPodcast: React.FC = () => {
              className="w-full flex justify-start items-start rounded-md"
           >
             <p className="w-14">{item.rank}.</p>
-            <p className="w-full">{podcastDetails[index]?.podcast_name}</p>
+            <Link
+              href={`/episode/${podcastDetails[index]?.podcast_uri}`}
+              className="text-blue-400 hover:text-blue-600 cursor-pointer"
+            >
+              {podcastDetails[index]?.podcast_name}
+            </Link>
           </li>
         ))}
       </ul>

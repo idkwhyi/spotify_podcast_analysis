@@ -82,7 +82,6 @@ const PodcastDetail = () => {
 
         setEpisodes(sortedEpisodes);
 
-        console.log("EPS DATA", episodesData);
       } catch (error) {
         setError(error instanceof Error ? error.message : "An error occurred");
       } finally {

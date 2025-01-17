@@ -13,7 +13,7 @@ import {
 import { useInfiniteScroll } from "@nextui-org/use-infinite-scroll";
 import { useAsyncList } from "@react-stately/data";
 import Link from "next/link";
-import { fetchTopEpisodes, fetchEpisodeDetails, formatDate, type CombinedEpisodeData } from "@/utils/api.episode";
+import { fetchTopEpisodes, fetchEpisodeDetails, type CombinedEpisodeData } from "@/utils/api.episode";
 
 const LoadingScreen = () => (
   <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
@@ -223,6 +223,7 @@ const AsyncEpisodeTable = () => {
           <TableColumn key="chart_rank_move" className={tableColumnStyle}>Rank Change</TableColumn>
           <TableColumn key="duration" className={tableColumnStyle}>Duration</TableColumn>
           <TableColumn key="release_date" className={tableColumnStyle}>Release Date</TableColumn>
+          <TableColumn key="main_category" className={tableColumnStyle}>Category</TableColumn>
           <TableColumn key="region_id" className={tableColumnStyle}>Region</TableColumn>
           <TableColumn key="episode_uri" className={tableColumnStyle}>Episode Link</TableColumn>
         </TableHeader>
@@ -245,15 +246,16 @@ const AsyncEpisodeTable = () => {
                 >
                   {item.episode_name}
                 </Link>
-                {item.episode_description && (
-                  <p className="text-sm text-gray-400 truncate mt-1">
+                {/* {item.episode_description && (
+                  <p className="text-sm text-gray-400 truncate mt-1 max-w-52">
                     {item.episode_description}
                   </p>
-                )}
+                )} */}
               </TableCell>
               <TableCell className="p-2">{getRankChangeDisplay(item)}</TableCell>
               <TableCell className="p-2">{formatDuration(item.duration_ms)}</TableCell>
               <TableCell className="p-2">{formatDate(item.episode_release_date)}</TableCell>
+              <TableCell className="p-2">{item.main_category}</TableCell>
               <TableCell className="p-2">{item.region_id}</TableCell>
               <TableCell className="p-2">
                 <a

@@ -12,7 +12,7 @@ export const getTopEpisodes = async () => {
     }
 
     const data = await res.json();
-    console.log("Fetched Data:", data);  // Log the response data
+    // console.log("Fetched Data:", data);  // Log the response data
 
     return data; 
   } catch (err) {

@@ -12,7 +12,6 @@ def main():
     date_used = date.today() # date
     print("Today: ", formatted_date) # File Name
 
-
     podcast_target_directory = os.path.expanduser("~/Desktop/saved_data/podcasts")
     episode_target_directory = os.path.expanduser("~/Desktop/saved_data/episode")
     # # Get podcast data and save it to the dir

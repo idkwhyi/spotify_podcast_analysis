@@ -7,6 +7,7 @@ import {
 } from "@/utils/api.category";
 import StackedLineChart from "@/components/chart/StackedLineChart";
 import EpisodeByCategory from "./EpisodeByCategory";
+import CategoryTable from "@/components/table/CategoryTable";
 
 // Define types for chartData
 interface SeriesData {
@@ -67,6 +68,9 @@ const Page = () => {
           ) : (
             <p>Loading chart data...</p>
           )}
+        </div>
+        <div>
+          <CategoryTable/>
         </div>
         <div>
           <h2 className="h2">Episode By Category</h2>
